@@ -19,6 +19,6 @@ plugin = {
 }
 )
 
-public class TestRunner {
+public class RunCucumberTest {
 
 }
