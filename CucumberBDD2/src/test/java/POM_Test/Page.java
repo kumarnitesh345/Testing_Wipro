@@ -1,87 +1,101 @@
 package POM_Test;
 
+import java.time.Duration;
+
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class Page {
 
-	WebDriver driver;
+    WebDriver driver;
 
-	public Page(WebDriver driver) {
+    public Page(WebDriver driver) {
+        this.driver = driver;
+    }
 
-		this.driver = driver;
-	}
+    // Locators
 
-	// Locators
+    By myAccount = By.xpath("//a[@title='My Account']");
 
-	By myAccount =
-	By.xpath("//span[text()='My Account']");
+    By loginOption = By.linkText("Login");
 
-	By loginOption =
-	By.linkText("Login");
+    By emailField = By.id("input-email");
 
-	By emailField =
-	By.id("input-email");
+    By passwordField = By.id("input-password");
 
-	By passwordField =
-	By.id("input-password");
+    By loginButton = By.xpath("//input[@value='Login']");
 
-	By loginButton =
-	By.xpath("//input[@value='Login']");
+    // Methods
 
-	// Methods
+    public void openLoginPage() {
 
-	public void openLoginPage() {
+        WebDriverWait wait =
+                new WebDriverWait(driver, Duration.ofSeconds(20));
 
-		driver.findElement(myAccount)
-		.click();
+        WebElement account =
+                wait.until(ExpectedConditions.elementToBeClickable(myAccount));
 
-		driver.findElement(loginOption)
-		.click();
+        JavascriptExecutor js =
+                (JavascriptExecutor) driver;
 
-		System.out.println(
-		"Shopping website launched and login page opened.");
-	}
+        js.executeScript("arguments[0].click();", account);
 
-	public void enterEmail(String email) {
+        WebElement login =
+                wait.until(ExpectedConditions.elementToBeClickable(loginOption));
 
-		WebElement mail =
-		driver.findElement(emailField);
+        js.executeScript("arguments[0].click();", login);
 
-		mail.clear();
+        System.out.println(
+                "Shopping website launched and login page opened.");
+    }
 
-		mail.sendKeys(email);
+    public void enterEmail(String email) {
 
-		System.out.println(
-		"Registered email entered successfully.");
-	}
+        WebElement mail =
+                driver.findElement(emailField);
 
-	public void enterPassword(String password) {
+        mail.clear();
 
-		WebElement pass =
-		driver.findElement(passwordField);
+        mail.sendKeys(email);
 
-		pass.clear();
+        System.out.println(
+                "Registered email entered successfully.");
+    }
 
-		pass.sendKeys(password);
+    public void enterPassword(String password) {
 
-		System.out.println(
-		"Password field updated successfully.");
-	}
+        WebElement pass =
+                driver.findElement(passwordField);
 
-	public void clickLogin(String status) {
+        pass.clear();
 
-		driver.findElement(loginButton)
-		.click();
+        pass.sendKeys(password);
 
-		System.out.println(
-		"Login request submitted : " + status);
-	}
+        System.out.println(
+                "Password field updated successfully.");
+    }
 
-	public void verifyDashboard() {
+    public void clickLogin(String status) {
 
-		System.out.println(
-		"Dashboard verification completed successfully.");
-	}
+        WebDriverWait wait =
+                new WebDriverWait(driver, Duration.ofSeconds(10));
+
+        WebElement loginBtn =
+                wait.until(ExpectedConditions.elementToBeClickable(loginButton));
+
+        loginBtn.click();
+
+        System.out.println(
+                "Login request submitted : " + status);
+    }
+
+    public void verifyDashboard() {
+
+        System.out.println(
+                "Dashboard verification completed successfully.");
+    }
 }
