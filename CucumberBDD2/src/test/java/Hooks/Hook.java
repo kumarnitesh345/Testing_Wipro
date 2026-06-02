@@ -4,6 +4,7 @@ import java.time.Duration;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 public class Hook {
 
@@ -11,9 +12,14 @@ public class Hook {
 
     public void setup() {
 
-        driver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
 
-        driver.manage().window().maximize();
+        options.addArguments("--headless=new");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--disable-gpu");
+
+        driver = new ChromeDriver(options);
 
         driver.manage().timeouts()
               .implicitlyWait(Duration.ofSeconds(10));
@@ -22,12 +28,8 @@ public class Hook {
     }
 
     public void closes() {
-
-        if (driver != null) {
-
+        if(driver != null) {
             driver.quit();
-
-            System.out.println("Browser session closed successfully.");
         }
     }
 }
