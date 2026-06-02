@@ -34,7 +34,37 @@ pipeline {
 
                 }
             }
+            
         }
+        stage('Docker Build') {
+
+    steps {
+
+        dir('CucumberBDD2') {
+
+                    bat 'docker build -t cucumber-framework .'
+
+                }
+
+    }
+
+}
+
+ 
+
+stage('Docker Run') {
+
+    steps {
+
+        dir('CucumberBDD2') {
+
+                    bat 'docker run --rm cucumber-framework'
+
+                }
+
+    }
+
+}
 
     }
 
