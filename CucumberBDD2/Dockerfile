@@ -2,7 +2,7 @@ FROM maven:3.9.15-eclipse-temurin-21
 
 WORKDIR /app
 
-# Install Google Chrome
+# Install Google Chrome  used only when hooks is changed for browser
 RUN apt-get update && apt-get install -y \
     wget \
     gnupg \
